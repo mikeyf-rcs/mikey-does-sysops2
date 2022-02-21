@@ -1,0 +1,24 @@
+version: '3.3'
+
+services:
+
+    postgres:
+        container_name: db
+        environment:
+            - POSTGRES_PASSWORD=EnsureIAMSecure
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        ports:
+            - '5432:5432'
+        image: 'postgres:14.2-alpine'
+        volumes:  
+            - /persistent/postgresql/data:/var/lib/postgresql/data
+    
+    python:
+        container_name: app
+        build: ./app/
+
+    nginx:
+        container_name: front-end
+        build: ./front-end/
+        ports:
+            - '8080:80'
